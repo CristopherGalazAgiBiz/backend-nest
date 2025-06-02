@@ -9,4 +9,8 @@ export class AppService {
   getHelloAleman(): string {
     return 'hola aleman';
   }
+
+  getHelloChile(): string {
+    return 'wena compare';
+  }
 }
