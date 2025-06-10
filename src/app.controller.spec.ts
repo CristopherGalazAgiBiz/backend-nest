@@ -4,8 +4,12 @@ import { AppService } from './app.service';
 
 describe('AppController', () => {
   let appController: AppController;
-
+  let mockDbService: { getUser: jest.Mock };
   beforeEach(async () => {
+    mockDbService = {
+      getUser: jest.fn().mockReturnValue({ id: 1, nombre: 'Loreto'}),
+    }
+
     const app: TestingModule = await Test.createTestingModule({
       controllers: [AppController],
       providers: [AppService],
@@ -14,9 +18,14 @@ describe('AppController', () => {
     appController = app.get<AppController>(AppController);
   });
 
-  describe('root', () => {
-    it('should return "Hello World!"', () => {
-      expect(appController.getHello()).toBe('Hello World!');
+  describe('Probar el modulo raiz del proyecto', () => {
+    test('esto deberia retornar hola mundo en ingles"', () => {
+      expect(appController.getHello()).toBe('Hello World!!');
+    });
+
+    it('Deberia buscar un id por usuario"', () => {
+      expect(appController.getUser(2342)).toEqual({ id: 1, nombre: 'Loreto'}});
+      expect(mockDbService.getUser).toHaveBeenLastCalledWith(2342);
     });
   });
 });

@@ -19,4 +19,9 @@ export class AppController {
   getHelloChile(): string {
     return this.appService.getHelloChile();
   }
+
+  @Get('getUser')
+  getUser(id: number): {id: number, nombre: string} } {
+    return { id, nombre: 'Loreto'};
+  }
 }
