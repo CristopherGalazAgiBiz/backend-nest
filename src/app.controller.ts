@@ -1,27 +1,38 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Query } from '@nestjs/common';
 import { AppService } from './app.service';
+import { DbManagerService } from './db-manager/db-manager.service';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(
+    private readonly appService: AppService,
+    private readonly dbManager: DbManagerService,
+  ) {}
 
+  // localhost:3000/
   @Get()
   getHello(): string {
     return this.appService.getHello();
   }
-
-  @Get('hello')
+  // localhost:3000/hallo
+  @Get('hallo')
   getHelloAleman(): string {
     return this.appService.getHelloAleman();
   }
 
-  @Get('wena')
-  getHelloChile(): string {
-    return this.appService.getHelloChile();
+  // localhost:3000/hallo
+  @Get('bonjour')
+  getHelloFrances(): string {
+    return this.appService.getHelloFrances();
   }
 
-  @Get('getUser')
-  getUser(id: number): {id: number, nombre: string} } {
-    return { id, nombre: 'Loreto'};
+  @Get('espanol')
+  getHelloEspanol(): string {
+    return '';
+  }
+
+  @Get('user')
+  getUser(@Query('id') id: number) {
+    return this.dbManager.getUser(id);
   }
 }
